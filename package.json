@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:server": "node server.js"
   },
   "dependencies": {
+    "express": "^4.17.3",
     "vue": "^3.2.25"
   },
   "devDependencies": {
