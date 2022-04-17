@@ -9,8 +9,13 @@
     "start:server": "node server.js"
   },
   "dependencies": {
+    "@types/moment": "^2.13.0",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
-    "vue": "^3.2.25"
+    "moment": "^2.29.2",
+    "sass": "^1.50.0",
+    "vue": "^3.2.25",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.1",
