@@ -8,7 +8,6 @@ import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import AutoComplete from "../AutoComplete/AutoComplete.vue";
 const store = useStore();
-const stations = computed<string[]>(() => useStore().getters.getStationNames);
 const suggestions = computed<
   {
     name: string;
@@ -17,7 +16,6 @@ const suggestions = computed<
 >(() => useStore().getters.getSuggestedStations);
 // const stationNames = ref<string[]>([]);
 const stationNames = computed(() => suggestions.value.map(station => station.name));
-
 function handleInput(value: string): void {
   if (value.length) {
     console.log("handleInput", value);

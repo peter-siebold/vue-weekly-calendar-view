@@ -17,7 +17,9 @@ const state: RootState = {
   toDate: undefined,
   filterByStationId: undefined,
   filteredBookings: [],
-  isLoadingBookings: false
+  isLoadingBookings: false,
+  bookingDetails: undefined,
+  isLoadingBookingDetails: false,
   
 };
 

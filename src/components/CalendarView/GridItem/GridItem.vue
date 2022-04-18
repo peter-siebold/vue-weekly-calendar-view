@@ -1,9 +1,11 @@
 <template>
+  <router-link :to="url">
   <section class="item">
     <time>{{ startDate }} - {{ endDate }} </time>
     <h4>{{ customerName }}</h4>
     <address>{{ pickupStationName }}</address>
   </section>
+  </router-link>
 </template>
 
 <script setup lang="ts">
@@ -15,9 +17,10 @@ import { Booking } from "../../../api/typings";
 const store = useStore();
 const props = defineProps<{
   booking: Booking;
+  url: string;
 }>();
 
-const { booking } = props;
+const { booking, url } = props;
 const { id, customerName, pickupReturnStationId } = booking;
 const startDate = computed(() => {
   return moment(props.booking.startDate).format("Do MMM YYYY");

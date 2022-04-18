@@ -18,5 +18,7 @@ export interface RootState {
   filterByStationId?: number;
   filteredBookings: Booking[];
   isLoadingBookings: boolean;
+  bookingDetails?: Booking;
+  isLoadingBookingDetails: boolean;
 
 }

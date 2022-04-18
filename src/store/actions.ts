@@ -64,5 +64,20 @@ export default {
     } finally {
       commit("SET_IS_LOADING_BOOKINGS", false);
     }
+  },
+
+  async fetchBookingDetails({ commit }: ActionContext<RootState, any>, {stationId, bookingId}: {stationId: number, bookingId: number}) {
+    commit("SET_IS_LOADING_BOOKING_DETAILS", true);
+    try {
+      const booking = await getBookingDetails(stationId, bookingId);
+      commit("SET_BOOKING_DETAILS", booking);
+    }
+    catch (error: any) {
+      commit("SET_HAS_ERROR", true);
+      commit("SET_ERROR", error.message);
+    }
+    finally {
+      commit("SET_IS_LOADING_BOOKING_DETAILS", false);
+    }
   }
 };

@@ -7,6 +7,7 @@ app.use(cors());
 app.options("*", cors());
 
 app.get("/stations", (req, res) => {
+  console.log("GET /stations");
   fs.readFile("./src/api/stations.json", "utf8", (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -19,6 +20,7 @@ app.get("/stations", (req, res) => {
 });
 
 app.get("/stations/:stationId/bookings/:bookingId", (req, res) => {
+  console.log(`GET /stations/${req.params.stationId}/bookings/${req.params.bookingId}`);
   fs.readFile("./src/api/stations.json", "utf8", (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -32,7 +34,7 @@ app.get("/stations/:stationId/bookings/:bookingId", (req, res) => {
           (booking) => booking.id === req.params.bookingId
         );
         if (bookings.length > 0) {
-          res.send(bookings);
+          res.send(bookings[0]);
         } else {
           res.status(404).send("No bookings found");
         }

@@ -2,6 +2,7 @@
   <section>
     <!-- <AutoComplete :items="stations" /> -->
     <StationSelector />
+    <input type="date" v-model="startDate">
   </section>
   <section>
     <button @click="setPreviousWeek">Previous Week</button> |
@@ -12,20 +13,33 @@
       v-for="booking in filteredBookings"
       :key="booking.id"
       :booking="booking"
+      :url="`/stations/${booking.pickupReturnStationId}/bookings/${booking.id}`"
     ></GridItem>
   </section>
 </template>
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import moment from "moment";
 import GridItem from "./GridItem/GridItem.vue";
 import StationSelector from "../StationSelector/StationSelector.vue";
+import { Booking } from "../../api/typings";
 
 const store = useStore();
-const filteredBookings = computed(() => store.getters.getFilteredBookings);
+const filteredBookings = computed<Booking[]>(() => store.getters.getFilteredBookings);
 
 const today = new Date();
+const startDate = ref(null);
+
+watch(() => startDate.value, () => {
+  const startOfWeek = moment(startDate.value).startOf("week");
+  const endOfWeek = moment(startOfWeek).endOf("week");
+    store.commit("SET_WEEK", {
+    fromDate: startOfWeek,
+    toDate: endOfWeek,
+  });
+  store.dispatch("fetchBookings");
+});
 
 function setNextWeek() {
   const currentStartOfWeek = store.getters.getFromDate;

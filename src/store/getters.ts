@@ -6,14 +6,18 @@ export default {
   getFilteredBookings: (state: RootState) => state.filteredBookings,
   getFromDate: (state: RootState) => state.fromDate,
   getToDate: (state: RootState) => state.toDate,
+  getBookingDetails: (state: RootState) => state.bookingDetails,
   getStationById: (state: RootState) => (id: number) => {
     const station = state.stations.find(
       (station: Station) => station.id === id
     );
-    if (!station) {
-      throw new Error(`Station with id ${id} not found`);
-    }
     return station;
+  },
+  getStationNameById: (state: RootState) => (id: number) => {
+    const station = state.stations.find(
+      (station: Station) => station.id === id
+    );
+    return station?.name ?? "";
   },
 
   getBookingsOrderByDate(state: RootState) {
@@ -44,5 +48,5 @@ export default {
     }
     return stationNames;
   },
-
+  
 };

@@ -32,6 +32,13 @@ export default {
   },
   SET_IS_LOADING_BOOKINGS(state: RootState, isLoading: boolean) {
     state.isLoadingBookings = isLoading;
-  }
+  },
+  SET_IS_LOADING_BOOKING_DETAILS(state: RootState, isLoading: boolean) {
+    state.isLoadingBookingDetails = isLoading;
+  },
+  SET_BOOKING_DETAILS(state: RootState, bookingDetails: Booking) {
+    state.bookingDetails = bookingDetails;
+  },
+  
 
 };
