@@ -22,9 +22,13 @@ const startDate = ref(null);
 
 function setNextWeek() {
   const currentStartOfWeek = store.getters.getFromDate;
+  console.log("currentStartOfWeek", currentStartOfWeek);
   const nextStartOfWeek = moment(currentStartOfWeek).add(7, "days");
+  console.log("nextStartOfWeek", nextStartOfWeek);
   const currentEndOfWeek = store.getters.getToDate;
+  console.log("currentEndOfWeek", currentEndOfWeek);
   const nextEndOfWeek = moment(currentEndOfWeek).add(7, "days");
+  console.log("nextEndOfWeek", nextEndOfWeek);
   store.commit("SET_WEEK", {
     fromDate: nextStartOfWeek,
     toDate: nextEndOfWeek,

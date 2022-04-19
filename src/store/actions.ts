@@ -2,6 +2,7 @@ import moment from "moment";
 import { ActionContext } from "vuex";
 import { getStations, getBookingDetails, getStationById } from "../api";
 import { Booking } from "../api/typings";
+import { getWeeklyBookings, sortBookingByStartAndEndDate } from "../utils/bookingHelper";
 import { RootState } from "./typings";
 export default {
   async requestStations({ commit }: ActionContext<RootState, any>) {
@@ -55,6 +56,8 @@ export default {
           moment(booking.startDate).isSame(end, "day") ||
           moment(booking.endDate).isSame(end, "day")
       );
+
+      // const filteredBookings = getWeeklyBookings(bookings, start, end)
       
         // Bookings are now prefiltered for the selected week
         // next, we need to sort the bookings by start date and end date 
@@ -69,6 +72,8 @@ export default {
           }
           return 0;
         });
+
+        // const sortedBookings = sortBookingByStartAndEndDate(filteredBookings);
         console.log("sortedBookings", sortedBookings);
 
 

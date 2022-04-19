@@ -747,6 +747,41 @@
     "name": "Freiburg",
     "bookings": [
       {
+        "id": "1",
+        "pickupReturnStationId": "7",
+        "customerName": "Iva Jacobson",
+        "startDate": "2022-02-05T20:14:10.117Z",
+        "endDate": "2022-04-30T03:31:09.218Z"
+      },
+      {
+        "id": "2",
+        "pickupReturnStationId": "7",
+        "customerName": "Iva Jacobson",
+        "startDate": "2022-02-05T20:14:10.117Z",
+        "endDate": "2022-04-30T03:31:09.218Z"
+      },
+      {
+        "id": "3",
+        "pickupReturnStationId": "7",
+        "customerName": "Iva Jacobson",
+        "startDate": "2022-02-05T20:14:10.117Z",
+        "endDate": "2022-04-30T03:31:09.218Z"
+      },
+      {
+        "id": "4",
+        "pickupReturnStationId": "7",
+        "customerName": "Iva Jacobson",
+        "startDate": "2022-02-05T20:14:10.117Z",
+        "endDate": "2022-04-30T03:31:09.218Z"
+      },
+      {
+        "id": "5",
+        "pickupReturnStationId": "7",
+        "customerName": "Iva Jacobson",
+        "startDate": "2022-02-05T20:14:10.117Z",
+        "endDate": "2022-04-30T03:31:09.218Z"
+      },
+      {
         "id": "6",
         "pickupReturnStationId": "7",
         "customerName": "Iva Jacobson",

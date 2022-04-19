@@ -30,14 +30,15 @@
   </section>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import moment from "moment";
 import GridItem from "./GridItem/GridItem.vue";
 import StationSelector from "../StationSelector/StationSelector.vue";
 import CalendarNavigation from "./CalendarNavigation.vue";
 import { Booking } from "../../api/typings";
+import { getBookingsGroupedByWeekday} from "../../utils/bookingHelper";
 
 const store = useStore();
 const router = useRouter();
@@ -45,14 +46,15 @@ const route = useRoute();
 
 const today = new Date();
 const startDate = ref(null);
-
+// Navigation
 watch(
   route,
   (to) => {
     const qryFrom =
-      moment(to.query.from as string) || moment(today).startOf("week");
-    const qryTo =
-      moment(to.query.to as string) || moment(qryFrom).endOf("week");
+      to.query.from !== undefined
+        ? moment(to.query.from as string)
+        : moment(today).startOf("week");
+    const qryTo = moment(qryFrom).endOf("week");
     const qryStationId = to?.query.stationId ?? store.getters.getStationId;
 
     store.commit("SET_WEEK", {
@@ -70,6 +72,27 @@ const filteredBookings = computed<Booking[]>(
   () => store.getters.getFilteredBookings
 );
 
+const groupedBookings = computed(() =>
+  filteredBookings.value.reduce((acc, booking) => {
+    const day = moment(booking.startDate).format("dddd");
+    if (!acc[day]) {
+      acc[day] = [];
+    }
+    acc[day].push(booking);
+    return acc;
+  }, {} as Record<string, Booking[]>)
+);
+
+console.log("groupedBookings", groupedBookings.value);
+
+const gpd = computed(() => {
+  const sow = moment(today).startOf("week");
+  const eow = moment(sow).endOf("week");
+  return getBookingsGroupedByWeekday(filteredBookings.value, sow, eow)
+  });
+
+console.log("gpd", gpd.value);
+// Datepicker
 watch(
   () => startDate.value,
   () => {
@@ -80,7 +103,6 @@ watch(
       toDate: endOfWeek,
     });
     const stationId = route.params.stationId || store.getters.getStationId;
-    console.log("startDate.value has changed", startOfWeek, endOfWeek);
     router.push({
       path: "/bookings",
       query: {
