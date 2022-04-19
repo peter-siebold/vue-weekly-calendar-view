@@ -70,20 +70,6 @@
       </div>
     </div>
   </div>
-  <!-- <br />
-  <hr />
-  <br />
-  <div class="grid grid-cols-7 gap-4">
-    <div v-for="day in daysOfWeek" class="header-item">{{ day }}</div>
-    <div v-for="bookinggroup in groupedBookings" :key="bookinggroup.key">
-      <GridItem
-        v-for="booking in bookinggroup.bookings"
-        :key="booking.key"
-        :booking="booking"
-        :url="`/stations/${booking.pickupReturnStationId}/bookings/${booking.id}`"
-      ></GridItem>
-    </div>
-  </div> -->
 </template>
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
@@ -203,16 +189,6 @@ watch(
 );
 </script>
 <style lang="scss">
-.calendar-grid {
-  display: flex;
-  flex-wrap: wrap;
-}
-.header-item {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin: 5px 5px 0px 5px;
-}
 
 $title-height: 3em;
 $days-height: 3em;
