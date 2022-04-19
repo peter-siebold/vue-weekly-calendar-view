@@ -30,7 +30,6 @@ watch(
     const stationName = store.getters.getStationNameById(qryStationId);
     if (stationName) {
       selectedStationName.value = stationName;
-      store.commit("SET_SELECTED_STATION_NAME", stationName);
     }
   },
   { flush: "pre", immediate: true, deep: true }

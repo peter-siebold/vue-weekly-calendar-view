@@ -7,7 +7,6 @@ export default {
   getFromDate: (state: RootState) => state.fromDate,
   getToDate: (state: RootState) => state.toDate,
   getStationId: (state: RootState) => state.filterByStationId,
-  getSelectedStationName: (state: RootState) => state.selectedStationName,
   getBookingDetails: (state: RootState) => state.bookingDetails,
   getStationById: (state: RootState) => (id: number) => {
     const station = state.stations.find(
@@ -21,24 +20,6 @@ export default {
     );
     return station?.name ?? "";
   },
-
-  getBookingsOrderByDate(state: RootState) {
-    const bookings: Booking[] = [];
-    for (let i in state.stations) {
-      bookings.push(...state.stations[i].bookings);
-    }
-    for (let i in bookings) {
-      bookings[i]["key"] = btoa(
-        `${bookings[i].id}-${bookings[i].pickupReturnStationId}-${bookings[i].startDate}-${bookings[i].endDate}`
-      );
-    }
-    return bookings.sort((a: Booking, b: Booking) => {
-      const dateA = moment(a.startDate).unix();
-      const dateB = moment(b.startDate).unix();
-      return dateA > dateB ? 1 : -1;
-    });
-  },
-
 
   getSuggestedStations(state: RootState) {
     const stationNames = [];

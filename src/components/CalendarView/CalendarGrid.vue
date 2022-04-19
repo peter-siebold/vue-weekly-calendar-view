@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute, onBeforeRouteUpdate,  } from "vue-router";
+import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
 import moment from "moment";
 import GridItem from "./GridItem/GridItem.vue";
 import StationSelector from "../StationSelector/StationSelector.vue";
@@ -46,12 +46,13 @@ const route = useRoute();
 const today = new Date();
 const startDate = ref(null);
 
-
 watch(
   route,
   (to) => {
-    const qryFrom =  moment(to.query.from as string) || moment(today).startOf("week")
-    const qryTo =  moment(to.query.to as string) || moment(qryFrom).endOf("week");
+    const qryFrom =
+      moment(to.query.from as string) || moment(today).startOf("week");
+    const qryTo =
+      moment(to.query.to as string) || moment(qryFrom).endOf("week");
     const qryStationId = to?.query.stationId ?? store.getters.getStationId;
 
     store.commit("SET_WEEK", {
@@ -65,11 +66,9 @@ watch(
   { flush: "pre", immediate: true, deep: true }
 );
 
-
 const filteredBookings = computed<Booking[]>(
   () => store.getters.getFilteredBookings
 );
-
 
 watch(
   () => startDate.value,
@@ -80,20 +79,18 @@ watch(
       fromDate: startOfWeek,
       toDate: endOfWeek,
     });
-    const stationId =
-      route.params.stationId || store.getters.getStationId;
+    const stationId = route.params.stationId || store.getters.getStationId;
+    console.log("startDate.value has changed", startOfWeek, endOfWeek);
     router.push({
-      name: "booking-overview",
-      params: {
+      path: "/bookings",
+      query: {
         stationId,
         from: startOfWeek.format("YYYY-MM-DD"),
         to: endOfWeek.format("YYYY-MM-DD"),
       },
     });
-    store.dispatch("fetchBookings");
   }
 );
-
 </script>
 <style lang="scss">
 .calendar-grid {

@@ -22,11 +22,11 @@ const store = useStore();
 const booking = computed<Booking>(() => store.getters.getBookingDetails);
 
 const startDate = computed(() => {
-  return moment(booking.value.startDate).format("Do MMM YYYY");
+  return moment(booking.value.startDate).format("Do MMM YYYY HH:mm");
 });
 
 const endDate = computed(() => {
-  return moment(booking.value.endDate).format("Do MMM YYYY");
+  return moment(booking.value.endDate).format("Do MMM YYYY HH:mm");
 });
 
 const pickupReturnStationName = computed(() => store.getters.getStationNameById(props.stationId));

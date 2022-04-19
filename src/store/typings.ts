@@ -20,6 +20,4 @@ export interface RootState {
   isLoadingBookings: boolean;
   bookingDetails?: Booking;
   isLoadingBookingDetails: boolean;
-  selectedStationName?: string;
-
 }

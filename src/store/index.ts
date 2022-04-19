@@ -20,8 +20,6 @@ const state: RootState = {
   isLoadingBookings: false,
   bookingDetails: undefined,
   isLoadingBookingDetails: false,
-  selectedStationName: undefined
-  
 };
 
 // define injection key

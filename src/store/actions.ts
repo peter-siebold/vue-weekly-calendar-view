@@ -55,10 +55,27 @@ export default {
           moment(booking.startDate).isSame(end, "day") ||
           moment(booking.endDate).isSame(end, "day")
       );
+      
+        // Bookings are now prefiltered for the selected week
+        // next, we need to sort the bookings by start date and end date 
+        // so that the bookings are displayed in the correct order
+        
+        const sortedBookings = filteredBookings.sort((a: Booking, b: Booking) => {
+          if (moment(a.startDate).isBefore(b.startDate) ||  moment(a.endDate).isBefore(b.endDate)) {
+            return -1;
+          }
+          if (moment(a.startDate).isAfter(b.startDate) ||  moment(a.endDate).isAfter(b.endDate)) {
+            return 1;
+          }
+          return 0;
+        });
+        console.log("sortedBookings", sortedBookings);
 
-      // TODO ort the bookings by start date or end date 
 
-      commit("SET_FILTERED_BOOKINGS", filteredBookings);
+      // TODO sort the bookings by start date or end date 
+
+
+      commit("SET_FILTERED_BOOKINGS", sortedBookings);
     } catch (error: any) {
       commit("SET_HAS_ERROR", true);
       commit("SET_ERROR", error.message);

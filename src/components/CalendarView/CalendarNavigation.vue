@@ -38,7 +38,6 @@ function setNextWeek() {
       to: nextEndOfWeek.format("YYYY-MM-DD"),
     }
   })
-  // store.dispatch("fetchBookings");
 }
 
 function setPreviousWeek() {
@@ -59,7 +58,6 @@ function setPreviousWeek() {
       to: previousEndOfWeek.format("YYYY-MM-DD"),
     }
   })
-  // store.dispatch("fetchBookings");
 }
 
 </script>

@@ -22,10 +22,10 @@ const props = defineProps<{
 const { booking, url } = props;
 const { id, customerName, pickupReturnStationId } = booking;
 const startDate = computed(() => {
-  return moment(props.booking.startDate).format("Do MMM YYYY");
+  return moment(props.booking.startDate).format("Do MMM YYYY HH:mm");
 });
 const endDate = computed(() => {
-  return moment(props.booking.endDate).format("Do MMM YYYY");
+  return moment(props.booking.endDate).format("Do MMM YYYY HH:mm");
 });
 
 const pickupStation = computed(() => {
