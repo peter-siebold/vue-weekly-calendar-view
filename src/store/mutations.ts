@@ -39,6 +39,9 @@ export default {
   SET_BOOKING_DETAILS(state: RootState, bookingDetails: Booking) {
     state.bookingDetails = bookingDetails;
   },
-  
+  SET_SELECTED_STATION_NAME(state: RootState, stationName: string) {
+    state.selectedStationName = stationName;
+  }
+
 
 };

@@ -34,7 +34,6 @@ export default {
       // else get the bookings for  all stations
       if(state.filterByStationId !== undefined) {
         const station = await getStationById(state.filterByStationId);
-        debugger;
         bookings = station?.bookings ?? [];
       } else {
         const stations = await getStations();
@@ -56,6 +55,8 @@ export default {
           moment(booking.startDate).isSame(end, "day") ||
           moment(booking.endDate).isSame(end, "day")
       );
+
+      // TODO ort the bookings by start date or end date 
 
       commit("SET_FILTERED_BOOKINGS", filteredBookings);
     } catch (error: any) {

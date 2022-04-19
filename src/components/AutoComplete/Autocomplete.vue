@@ -1,4 +1,5 @@
-<template>   <div ref="el" class="autocomplete">
+<template>
+  <div ref="el" class="autocomplete">
     <input
       v-model="search"
       type="text"
@@ -28,29 +29,32 @@ import { onMounted, ref, withDefaults, watch, onUnmounted, toRef } from "vue";
 export interface AutocompleteProps {
   items: string[];
   isAsync?: boolean;
+  selected?: string;
 }
-const el = ref<HTMLElement | null>(null);
-
-
-
 const props = withDefaults(defineProps<AutocompleteProps>(), {
   items: () => [],
   isAsync: false,
+  selected: "",
 });
 
 const emit = defineEmits<{
-  (e: 'input', id: string): void
-  (e: 'select', value: string): void
-}>()
+  (e: "input", id: string): void;
+  (e: "select", value: string): void;
+}>();
 
-
-const items = toRef(props, "items");
-
+const el = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
 const results = ref<string[]>([]);
 const search = ref("");
 const isLoading = ref(false);
 const arrowCounter = ref(-1);
+const { selected } = props;
+
+if(selected) {
+  search.value = selected;
+}
+
+const items = toRef(props, "items");
 
 watch(items, (value, oldValue) => {
   results.value = value;

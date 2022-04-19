@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { computed } from "@vue/reactivity";
 import moment from "moment";
 import { useStore } from "vuex";

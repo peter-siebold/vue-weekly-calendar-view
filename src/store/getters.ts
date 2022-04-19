@@ -6,6 +6,8 @@ export default {
   getFilteredBookings: (state: RootState) => state.filteredBookings,
   getFromDate: (state: RootState) => state.fromDate,
   getToDate: (state: RootState) => state.toDate,
+  getStationId: (state: RootState) => state.filterByStationId,
+  getSelectedStationName: (state: RootState) => state.selectedStationName,
   getBookingDetails: (state: RootState) => state.bookingDetails,
   getStationById: (state: RootState) => (id: number) => {
     const station = state.stations.find(

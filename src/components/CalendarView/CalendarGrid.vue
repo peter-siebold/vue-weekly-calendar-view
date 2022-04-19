@@ -1,13 +1,25 @@
 <template>
   <section>
-    <!-- <AutoComplete :items="stations" /> -->
     <StationSelector />
-    <input type="date" v-model="startDate">
+    <input type="date" v-model="startDate" />
   </section>
-  <section>
-    <button @click="setPreviousWeek">Previous Week</button> |
-    <button @click="setNextWeek">Next Week</button>
-  </section>
+  <CalendarNavigation />
+  <div class="grid grid-cols-7 gap-4">
+    <div>Monday</div>
+    <div>Tuesday</div>
+    <div>Wednesday</div>
+    <div>Thursday</div>
+    <div>Friday</div>
+    <div>Saturday</div>
+    <div>Sunday</div>
+    <div>02</div>
+    <div>03</div>
+    <div>04</div>
+    <div>05</div>
+    <div>06</div>
+    <div>07</div>
+    <div>08</div>
+  </div>
   <section class="calendar-grid">
     <GridItem
       v-for="booking in filteredBookings"
@@ -20,61 +32,68 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
+import { useRouter, useRoute, onBeforeRouteUpdate,  } from "vue-router";
 import moment from "moment";
 import GridItem from "./GridItem/GridItem.vue";
 import StationSelector from "../StationSelector/StationSelector.vue";
+import CalendarNavigation from "./CalendarNavigation.vue";
 import { Booking } from "../../api/typings";
 
 const store = useStore();
-const filteredBookings = computed<Booking[]>(() => store.getters.getFilteredBookings);
+const router = useRouter();
+const route = useRoute();
 
 const today = new Date();
 const startDate = ref(null);
 
-watch(() => startDate.value, () => {
-  const startOfWeek = moment(startDate.value).startOf("week");
-  const endOfWeek = moment(startOfWeek).endOf("week");
+
+watch(
+  route,
+  (to) => {
+    const qryFrom =  moment(to.query.from as string) || moment(today).startOf("week")
+    const qryTo =  moment(to.query.to as string) || moment(qryFrom).endOf("week");
+    const qryStationId = to?.query.stationId ?? store.getters.getStationId;
+
     store.commit("SET_WEEK", {
-    fromDate: startOfWeek,
-    toDate: endOfWeek,
-  });
-  store.dispatch("fetchBookings");
-});
+      fromDate: moment(qryFrom),
+      toDate: moment(qryTo),
+    });
+    store.commit("SET_FILTER_BY_STATION_ID", qryStationId);
+    store.dispatch("fetchBookings");
+  },
 
-function setNextWeek() {
-  const currentStartOfWeek = store.getters.getFromDate;
-  const nextStartOfWeek = moment(currentStartOfWeek).add(7, "days");
-  const currentEndOfWeek = store.getters.getToDate;
-  const nextEndOfWeek = moment(currentEndOfWeek).add(7, "days");
-  store.commit("SET_WEEK", {
-    fromDate: nextStartOfWeek,
-    toDate: nextEndOfWeek,
-  });
-  store.dispatch("fetchBookings");
-}
+  { flush: "pre", immediate: true, deep: true }
+);
 
-function setPreviousWeek() {
-  const currentStartOfWeek = store.getters.getFromDate;
-  const previousStartOfWeek = moment(currentStartOfWeek).subtract(7, "days");
-  const currentEndOfWeek = store.getters.getToDate;
-  const previousEndOfWeek = moment(currentEndOfWeek).subtract(7, "days");
-  store.commit("SET_WEEK", {
-    fromDate: previousStartOfWeek,
-    toDate: previousEndOfWeek,
-  });
-  store.dispatch("fetchBookings");
-}
 
-onMounted(() => {
-  const startOfWeek = moment(today).startOf("week");
-  const endOfWeek = moment(today).endOf("week");
+const filteredBookings = computed<Booking[]>(
+  () => store.getters.getFilteredBookings
+);
 
-  store.commit("SET_WEEK", {
-    fromDate: startOfWeek,
-    toDate: endOfWeek,
-  });
-  store.dispatch("fetchBookings");
-});
+
+watch(
+  () => startDate.value,
+  () => {
+    const startOfWeek = moment(startDate.value).startOf("week");
+    const endOfWeek = moment(startOfWeek).endOf("week");
+    store.commit("SET_WEEK", {
+      fromDate: startOfWeek,
+      toDate: endOfWeek,
+    });
+    const stationId =
+      route.params.stationId || store.getters.getStationId;
+    router.push({
+      name: "booking-overview",
+      params: {
+        stationId,
+        from: startOfWeek.format("YYYY-MM-DD"),
+        to: endOfWeek.format("YYYY-MM-DD"),
+      },
+    });
+    store.dispatch("fetchBookings");
+  }
+);
+
 </script>
 <style lang="scss">
 .calendar-grid {
