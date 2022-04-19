@@ -1,13 +1,20 @@
 <template>
   <div ref="el" class="autocomplete">
-    <input
-      v-model="search"
-      type="text"
-      @input="onChange"
-      @keydown.down="onArrowDown"
-      @keydown.up="onArrowUp"
-      @keydown.enter="onEnter"
-    />
+    <div class="flex items-center">
+      <div class="flex border-2 border-gray-200 rounded">
+        <input
+          type="text"
+          class="px-4 py-2 w-80"
+          placeholder="Search..."
+          v-model="search"
+          @input="onChange"
+          @keydown.down="onArrowDown"
+          @keydown.up="onArrowUp"
+          @keydown.enter="onEnter"
+        />
+        <button class="px-4 text-white bg-gray-600 border-l">Search</button>
+      </div>
+    </div>
     <ul v-show="isOpen" id="autocomplete-results" class="autocomplete-results">
       <li v-if="isLoading" class="loading">Loading results...</li>
       <li
@@ -50,7 +57,7 @@ const isLoading = ref(false);
 const arrowCounter = ref(-1);
 const { selected } = props;
 
-if(selected) {
+if (selected) {
   search.value = selected;
 }
 

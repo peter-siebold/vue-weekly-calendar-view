@@ -1,10 +1,10 @@
 <template>
   <router-link :to="url">
-  <section class="item">
-    <time>{{ startDate }} - {{ endDate }} </time>
+  <div class="item">
+    <time class="datetime">{{ startDate }} - {{ endDate }} </time>
     <h4>{{ customerName }}</h4>
-    <address>{{ pickupStationName }}</address>
-  </section>
+    <!-- <address>{{ pickupStationName }}</address> -->
+  </div>
   </router-link>
 </template>
 
@@ -22,10 +22,10 @@ const props = defineProps<{
 const { booking, url } = props;
 const { id, customerName, pickupReturnStationId } = booking;
 const startDate = computed(() => {
-  return moment(props.booking.startDate).format("Do MMM YYYY HH:mm");
+  return moment(props.booking.startDate).format("DD.MM.YY  HH:mm");
 });
 const endDate = computed(() => {
-  return moment(props.booking.endDate).format("Do MMM YYYY HH:mm");
+  return moment(props.booking.endDate).format("DD.MM.YY HH:mm");
 });
 
 const pickupStation = computed(() => {
@@ -37,18 +37,14 @@ const pickupStationName = computed(() => {
 </script>
 
 <style lang="scss">
-.item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin: 5px;
-  max-width: calc((100vw - 20px) / 7);
-  time {
-    font-size: 12px;
-  }
+// .item {
+//   padding: 10px;
+//   border: 1px solid #ccc;
+//   border-radius: 5px;
+//   margin: 5px;
+// }
+.datetime {
+  font-size: 10px;
+  color: rgb(146, 143, 143);
 }
 </style>

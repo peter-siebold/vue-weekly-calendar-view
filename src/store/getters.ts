@@ -32,7 +32,7 @@ export default {
     return stationNames;
   },
 
-  getBookingsGroupedByWeekDay: (state: RootState) => {
+  getBookingsGroupedByWeekDayOLD: (state: RootState) => {
     const bookings = state.filteredBookings;
     const start = state.fromDate;
     const end = state.toDate;

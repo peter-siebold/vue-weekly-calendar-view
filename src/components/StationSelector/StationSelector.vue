@@ -1,5 +1,6 @@
 <template>
   <section>
+    <label>Filter for station: </label>
     <AutoComplete
       :items="stationNames"
       @input="handleInput"
