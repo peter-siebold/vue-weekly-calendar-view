@@ -6,42 +6,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from "vue-router";
 import moment from "moment";
-import { Booking } from "../../api/typings";
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 const store = useStore();
-const filteredBookings = computed<Booking[]>(() => store.getters.getFilteredBookings);
-
-const today = new Date();
-const startDate = ref(null);
 
 function setNextWeek() {
   const currentStartOfWeek = store.getters.getFromDate;
-  console.log("currentStartOfWeek", currentStartOfWeek);
   const nextStartOfWeek = moment(currentStartOfWeek).add(7, "days");
-  console.log("nextStartOfWeek", nextStartOfWeek);
   const currentEndOfWeek = store.getters.getToDate;
-  console.log("currentEndOfWeek", currentEndOfWeek);
   const nextEndOfWeek = moment(currentEndOfWeek).add(7, "days");
-  console.log("nextEndOfWeek", nextEndOfWeek);
   store.commit("SET_WEEK", {
     fromDate: nextStartOfWeek,
     toDate: nextEndOfWeek,
   });
-  const stationId = route.params.stationId  || store.getters.getStationId;
+  const stationId = route.params.stationId || store.getters.getStationId;
   router.push({
-    path: '/bookings',
+    path: "/bookings",
     query: {
       stationId,
       from: nextStartOfWeek.format("YYYY-MM-DD"),
       to: nextEndOfWeek.format("YYYY-MM-DD"),
-    }
-  })
+    },
+  });
 }
 
 function setPreviousWeek() {
@@ -53,15 +43,14 @@ function setPreviousWeek() {
     fromDate: previousStartOfWeek,
     toDate: previousEndOfWeek,
   });
-    const stationId = route.params.stationId  || store.getters.getStationId;
+  const stationId = route.params.stationId || store.getters.getStationId;
   router.push({
-   path: '/bookings',
+    path: "/bookings",
     query: {
       stationId,
       from: previousStartOfWeek.format("YYYY-MM-DD"),
       to: previousEndOfWeek.format("YYYY-MM-DD"),
-    }
-  })
+    },
+  });
 }
-
 </script>

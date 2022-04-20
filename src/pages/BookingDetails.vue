@@ -1,5 +1,6 @@
 <template>
   <section v-if="booking">
+    <h2>Booking Details</h2>
     <h2>{{ booking.customerName }}</h2>
     <h3>{{ startDate }} - {{ endDate }}</h3>
     <p>{{ pickupReturnStationName }}</p>
@@ -51,7 +52,7 @@ section {
   margin: 3rem auto;
   max-width: 40rem;
   padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  /* border-radius: 12px; */
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
 }
 </style>

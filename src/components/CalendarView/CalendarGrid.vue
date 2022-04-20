@@ -3,14 +3,15 @@
     <StationSelector />
     <label>Select a Week</label>
     <input type="date" v-model="startDate" />
-    
   </section>
   <CalendarNavigation />
   <hr />
   <br />
-
-  <div class="">
-    <div class="title">{{ startOfWeek.format("dddd DD.MM.YY ") }} - {{ endOfWeek.format("dddd DD.MM.YY ") }}</div>
+  <div class="calendar-container">
+    <div class="title">
+      {{ startOfWeek.format("dddd DD.MM.YY ") }} -
+      {{ endOfWeek.format("dddd DD.MM.YY ") }}
+    </div>
     <div class="days">
       <div class="filler"></div>
       <div class="filler"></div>
@@ -32,7 +33,6 @@
       >
         {{ item }}
       </div>
-
       <div class="filler-col"></div>
       <div class="col" style="grid-column: 3"></div>
       <div class="col" style="grid-column: 4"></div>
@@ -47,27 +47,23 @@
         :style="{ 'grid-row': index + 1 }"
         :key="`row-${item}-${index + 1}`"
       ></div>
-
-
-
-    <template v-for="(bookinggroup, bookingIndex) in groupedBookings" :key="bookinggroup.key">
-      <GridItem
-        v-for="booking in bookinggroup.bookings"
-        :key="booking.key"
-        :booking="booking"
-        :url="`/stations/${booking.pickupReturnStationId}/bookings/${booking.id}`"
-        class="event calendar1"
-        :style="{
-          'grid-row': moment(booking.dueDate).format('H'),
-          'grid-column': bookingIndex+3
-        }"
-
-      />
-    </template>
-
-      <div class="current-time">
-        <div class="circle"></div>
-      </div>
+      <template
+        v-for="(bookinggroup, bookingIndex) in groupedBookings"
+        :key="bookinggroup.key"
+      >
+        <GridItem
+          v-for="booking in bookinggroup.bookings"
+          :key="booking.key"
+          :booking="booking"
+          :url="`/stations/${booking.pickupReturnStationId}/bookings/${booking.id}`"
+          class="event calendar1"
+          :class="`event calendar${booking.pickupReturnStationId}`"
+          :style="{
+            'grid-row': moment(booking.dueDate).format('H'),
+            'grid-column': bookingIndex + 3,
+          }"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -119,14 +115,22 @@ const timeScale = [
 ];
 
 const startOfWeek = computed(() => {
-  return moment(store.getters.getFromDate) || route?.query?.from
-    ? moment(route.query.from as string)
-    : moment(today).startOf("week");
+  if (store.getters.getFromDate) {
+    return moment(store.getters.getFromDate);
+  } else if (route?.query?.from) {
+    return moment(route.query.from as string);
+  } else {
+    return moment(today).startOf("week");
+  }
 });
 const endOfWeek = computed(() => {
-  return moment(store.getters.getToDate) || route?.query?.to
-    ? moment(route.query.to as string)
-    : moment(today).endOf("week");
+  if (store.getters.getToDate) {
+    return moment(store.getters.getToDate);
+  } else if (route?.query?.to) {
+    return moment(route.query.to as string);
+  } else {
+    return moment(today).endOf("week");
+  }
 });
 const daysOfWeek = computed(() => {
   return getDaysOfWeek(startOfWeek.value);
@@ -189,7 +193,6 @@ watch(
 );
 </script>
 <style lang="scss">
-
 $title-height: 3em;
 $days-height: 3em;
 $time-width: 3em;
@@ -206,7 +209,7 @@ body {
   background: #fff;
 }
 
-.container {
+.calendar-container {
   width: 100%;
   display: grid;
   grid-template-rows: $title-height $days-height auto;
@@ -277,9 +280,10 @@ body {
 .event {
   border-radius: 5px;
   padding: 5px;
-  margin-right: 10px;
   font-weight: bold;
   font-size: 80%;
+  margin: 1px 1px 2px 1px;
+  overflow: hidden;
 }
 
 .weekend {
@@ -292,8 +296,28 @@ body {
 }
 
 .calendar2 {
-  background-color: #b3e1f7;
-  border-color: #81cdf2;
+  background-color: #eab3f7;
+  border-color: #e581f2;
+}
+
+.calendar3 {
+  background-color: #b3f7be;
+  border-color: #81f29d;
+}
+
+.calendar4 {
+  background-color: #f7dfb3;
+  border-color: #f2ca81;
+}
+
+.calendar5 {
+  background-color: #f7b3be;
+  border-color: #f281a3;
+}
+
+.calendar6 {
+  background-color: #b3f7bc;
+  border-color: #81f281;
 }
 
 .event1 {
