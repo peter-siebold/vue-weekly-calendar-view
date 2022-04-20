@@ -1,8 +1,8 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from 'vite'
 import vue from "@vitejs/plugin-vue";
 
-// https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({command, mode}) => ({
+  base:  mode === "production" ? "/vue-weekly-calendar-view" : "/",
   plugins: [vue()],
   css: {
     preprocessorOptions: {
@@ -11,4 +11,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

@@ -9,7 +9,8 @@
     "prettier": "prettier --write '**/*.{ts,js,json,md,vue}'",
     "start:server": "node server.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier .  --write"
+    "format": "prettier .  --write",
+    "deploy": "sh ./deploy.sh"
   },
   "dependencies": {
     "@types/moment": "^2.13.0",

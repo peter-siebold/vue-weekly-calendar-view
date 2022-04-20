@@ -4,16 +4,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { useStore } from "vuex";
 import TheHeader from "./components/Header/Header.vue";
-
-// const store = useStore();
-
-// onMounted(() => {
-//   store.dispatch("requestStations");
-// });
-// </script>
+</script>
 
 <style lang="scss">
 html {
