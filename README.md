@@ -1,6 +1,6 @@
-# Roadsurfer Frontend Task
+# Weekly Calendar View with Vite / Vue
 
-A simple Frontend to display the Bookings for one or all stations for a week
+A simple weekly calendar view for displaying Bookings of a selected week for a selected location
 
 ## Installation and Setup
 
