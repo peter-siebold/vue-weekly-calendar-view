@@ -10,7 +10,7 @@
     "start:server": "node server.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
-    "deploy": "sh ./deploy.sh"
+    "deploy": "sh deploy.sh"
   },
   "dependencies": {
     "@types/moment": "^2.13.0",
